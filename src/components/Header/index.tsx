@@ -10,7 +10,8 @@ import {
     Wrapper
 
 } from './styles'
-const Header = ({autenticado}) =>{
+import { IHeader } from './types'
+const Header = ({autenticado}: IHeader) =>{
     return(
         <Wrapper>
             <Container>

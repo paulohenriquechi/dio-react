@@ -7,6 +7,7 @@ import { useForm} from 'react-hook-form'
 import { Input } from '../../components/Input'
 import { Column, Container, CriarText, EsqueciText, Row, SubtitleLogin, Title, TitleLogin, Wrapper} from './styles'
 import { api } from '../../services/api';
+import { IFormData } from './types';
 const schema = yup.object({
     email: yup.string().email('Email inválido').required('Campo Obrigatorio'),
     password: yup.string().min(3, 'No mínimo 3 caracteres').required('Campo Obrigatorio'),
@@ -15,12 +16,12 @@ const schema = yup.object({
 const Login = () =>{
     const navigate = useNavigate();
     //eslint-disable-next-line
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control, handleSubmit, formState: { errors } } = useForm<IFormData>({
         resolver: yupResolver(schema),
         mode: 'onChange',
     });
 
-    const onSubmit = async formdata => {
+    const onSubmit = async (formdata: IFormData) => {
         try {
             const { data } = await api.get(`users?email=${formdata.email}&senha=${formdata.password}`);
             if(data.length === 1){
